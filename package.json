@@ -10,7 +10,6 @@
     "author": "sv1floki",
     "scripts": {
         "start": "node mouse-server.js",
-        "build": "npm install",
-        "postinstall": "npm install"
+        "build": "npm install"
     }
 }
