@@ -9,7 +9,7 @@
     },
     "author": "sv1floki",
     "scripts": {
-        "start": "node src/index.js",
+        "start": "node mouse-server.js",
         "build": "npm install"
     }
 }
