@@ -38,7 +38,7 @@ var virtualMouse = {
       cursor = document.createElement('img');
       cursor.className = 'virtualMouse';
       cursor.id = 'cursor-' + id;
-      cursor.src = '/img/cursor.png';
+      cursor.src = '/img/mark-cursor.png';
       cursor.style.position = 'absolute';
       document.body.appendChild(cursor);
     }
