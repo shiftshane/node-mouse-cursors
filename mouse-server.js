@@ -3,7 +3,10 @@ var express = require('express');
 
 // Create express app.
 var app = express();
-var port = 3700;
+
+// set the port of our application
+// process.env.PORT lets the port be set by Heroku
+var port = process.env.PORT || 3700;
 
 // Setup the template engine (jade)
 app.set('views', __dirname + '/tpl');
