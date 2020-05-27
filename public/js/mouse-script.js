@@ -1,31 +1,52 @@
 
 // client interaction functionality setup
 window.onload = function () {
-  //var socket = io.connect('http://localhost:3700');
+  var userName = "Anonymous";
+  askName();
+
+  // var socket = io.connect('http://localhost:3700');
   var socket = io.connect(window.location.hostname);
   
-  // send mouse position updates
-  document.onmousemove = function (ev) {
-    socket.emit("mouse movement", { pos: { x: ev.clientX, y: ev.clientY } });
-  }
+  // // send mouse position updates
+  // document.onmousemove = function (ev) {
+  //   socket.emit("mouse movement", { pos: { x: ev.clientX, y: ev.clientY, name: userName } });
+  // }
   
   // initial setup, should only happen once right after socket connection has been established
   socket.on('mouse setup', function (mouses) {
     for (var mouse_id in mouses) {
       virtualMouse.move(mouse_id, mouses.mouse_id);
     }
+    console.log("mouses", mouses);
   });
   
   // update mouse position
   socket.on('mouse update', function (mouse) {
     virtualMouse.move(mouse.id, mouse.pos);
+    console.log('update mouse position')
   });
   
   // remove disconnected mouse
   socket.on('mouse disconnect', function (mouse) {
     virtualMouse.remove(mouse.id);
   });
-  
+
+  function askName() {
+    var person = prompt("Please enter your name:", "Mark");
+    if (person == null || person == "") {
+      // message = "You hit cancel, dummy.";
+      userName = "Anonymous";
+    } else {
+      // message = "Hello " + person + "!";
+      userName = person;
+    }
+    // send mouse position updates AFTER a name is chosen
+    document.onmousemove = function (ev) {
+      socket.emit("mouse movement", { pos: { x: ev.clientX, y: ev.clientY, name: userName } });
+    }
+    
+    // document.getElementById("person-name").innerHTML = message;
+  }
 }
 
 // virtual mouse module
@@ -35,11 +56,12 @@ var virtualMouse = {
   move: function (id, pos) {
     var cursor = document.getElementById('cursor-' + id);
     if (!cursor) {
-      cursor = document.createElement('img');
+      cursor = document.createElement('div');
       cursor.className = 'virtualMouse';
       cursor.id = 'cursor-' + id;
-      cursor.src = '/img/mark-cursor.png';
       cursor.style.position = 'absolute';
+      img = cursor.innerHTML = '<img src="/img/cursor.png" /><div class="cursor-name">' + pos.name + '</div>';
+      // img.src = '/img/mark-cursor.png';
       document.body.appendChild(cursor);
     }
     cursor.style.left = pos.x + 'px';
@@ -51,3 +73,4 @@ var virtualMouse = {
     cursor.parentNode.removeChild(cursor);
   }
 }
+

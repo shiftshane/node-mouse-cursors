@@ -15,7 +15,7 @@ app.engine('jade', require('jade').__express);
 
 // Middleware
 app.get("/", function(req, res){
-    res.render("page");
+    res.render("page.jade");
 });
 
 // setup a public folder directory
