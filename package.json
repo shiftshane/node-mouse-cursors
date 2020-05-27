@@ -7,5 +7,8 @@
         "socket.io": "~0.9.16",
         "jade": "latest"
     },
-    "author": "sv1floki"
+    "author": "sv1floki",
+    "scripts": {
+        "start": "node mouse-server.js",
+    }
 }
